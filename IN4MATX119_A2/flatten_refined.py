@@ -1,26 +1,12 @@
-from collections.abc import Iterable
-
 def flatten(arr):
-    """
-    Recursively flattens a nested iterable, yielding elements one by one.
-
-    Args:
-        arr: The iterable to flatten.
-
-    Yields:
-        Elements from the flattened iterable.
-
-    Raises:
-        TypeError: If the input `arr` is not iterable.
-    """
-    if not isinstance(arr, Iterable):
-        raise TypeError(f"Input must be an iterable, but got {type(arr).__name__}")
-
+    """Yields elements from a nested iterable, unnesting lists."""
     for x in arr:
-        # Check if x is an iterable but not a string (which we want to treat as atomic)
-        if isinstance(x, Iterable) and not isinstance(x, str):
-            # Recursively flatten the sub-iterable
-            yield from flatten(x)
+        if isinstance(x, list):
+            yield from flatten(x)  # Use yield from for cleaner delegation
         else:
-            # Yield the atomic element
-            yield x
+            yield x  # Yield the element directly if it's not a list
+
+# Example Usage:
+# nested_list = [1, [2, 3], [4, [5, 6]], 7]
+# for item in flatten(nested_list):
+#     print(item)

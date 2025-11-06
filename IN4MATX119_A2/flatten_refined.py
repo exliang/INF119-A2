@@ -1,17 +1,18 @@
+
 def flatten(arr):
-    """Flattens a nested list recursively.
+    """Flattens a nested list into a single-level iterator.
 
     Args:
         arr: A list that may contain nested lists.
 
     Yields:
-        Elements from the flattened list.
+        Individual elements from the nested list.
     """
     for x in arr:
         if isinstance(x, list):
-            # Recursively flatten if the element is a list
+            # If x is a list, recursively call flatten and yield its elements
             for y in flatten(x):
                 yield y
         else:
-            # Yield the element directly if it's not a list
+            # If x is not a list, yield it directly
             yield x

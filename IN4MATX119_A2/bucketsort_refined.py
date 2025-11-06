@@ -1,33 +1,32 @@
 
-def bucketsort(arr: list[int], k: int) -> list[int]:
+def bucketsort(arr, k):
     """
-    Sorts a list of non-negative integers using the Counting Sort algorithm.
+    Sorts an array of non-negative integers less than k using a counting sort approach.
 
     Args:
-        arr: A list of non-negative integers to be sorted.
-        k: The exclusive upper bound of the values in arr. 
-           Assumes values in arr are in the range [0, k-1].
+        arr (list): A list of non-negative integers.
+        k (int): The upper bound (exclusive) of the integers in arr.
 
     Returns:
-        A new list containing the sorted elements of arr.
+        list: A new list containing the sorted elements of arr.
     """
-    if not arr:
-        return []
-
-    # Initialize counts array with size k, all elements set to 0.
-    # counts[i] will store the frequency of value i in arr.
+    # Initialize a list to store the count of each number.
+    # The size of this list is k, representing numbers from 0 to k-1.
     counts = [0] * k
 
-    # Count the occurrences of each element in arr.
+    # Count the occurrences of each number in the input array.
     for x in arr:
+        # Ensure the element is within the valid range [0, k-1]
         if not (0 <= x < k):
-            raise ValueError(f"Element {x} is out of the expected range [0, {k-1})")
+            raise ValueError(f"Element {x} is out of the specified range [0, {k-1})")
         counts[x] += 1
 
+    # Build the sorted array based on the counts.
     sorted_arr = []
-    # Reconstruct the sorted array based on the counts.
-    # For each number 'num' from 0 to k-1, add it 'count' times.
-    for num, count in enumerate(counts):
-        sorted_arr.extend([num] * count)
+    # Iterate through the possible numbers (from 0 to k-1).
+    for i in range(k):
+        # For each number i, append it to sorted_arr 'counts[i]' times.
+        # This is where the original code had a bug, iterating over 'arr' instead of 'counts'.
+        sorted_arr.extend([i] * counts[i])
 
     return sorted_arr
